@@ -1,4 +1,4 @@
-import { QueryObserverOptions, useQuery } from 'react-query';
+import { QueryObserverOptions, useQuery } from '@tanstack/react-query';
 
 import getMainMarkets, { GetMainMarketsOutput } from 'clients/api/queries/getMainMarkets';
 import { useMulticall } from 'clients/web3';

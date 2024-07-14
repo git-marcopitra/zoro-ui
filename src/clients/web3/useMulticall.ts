@@ -1,12 +1,14 @@
-import { Multicall } from 'ethereum-multicall';
-import { useMemo } from 'react';
-import { getContractAddress } from 'utilities';
-
-import { useAuth } from 'context/AuthContext';
+import { Multicall } from "ethereum-multicall";
+import { useProvider } from "hooks/useProvider";
+import { useMemo } from "react";
+import { getContractAddress } from "utilities";
 
 const useMulticall = () => {
-  const { provider } = useAuth();
-  const MULTICALL_ADDRESS = getContractAddress('multicall');
+  const provider = useProvider();
+  const MULTICALL_ADDRESS = getContractAddress("multicall");
+
+  if (!provider) return;
+  
   return useMemo(
     () =>
       new Multicall({
@@ -14,7 +16,7 @@ const useMulticall = () => {
         ethersProvider: provider,
         tryAggregate: true,
       }),
-    [provider],
+    [provider]
   );
 };
 

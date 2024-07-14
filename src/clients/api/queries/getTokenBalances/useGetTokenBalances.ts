@@ -1,45 +1,45 @@
-import { QueryObserverOptions, useQuery } from 'react-query';
-
-import { GetTokenBalancesInput, GetTokenBalancesOutput, getTokenBalances } from 'clients/api';
-import { useMulticall } from 'clients/web3';
-import FunctionKey from 'constants/functionKey';
-import { useAuth } from 'context/AuthContext';
+import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
+import {
+  GetTokenBalancesInput,
+  GetTokenBalancesOutput,
+  getTokenBalances,
+} from "clients/api";
+import { useMulticall } from "clients/web3";
+import FunctionKey from "constants/functionKey";
+import { useProvider } from "hooks/useProvider";
 
 export type Options = QueryObserverOptions<
   GetTokenBalancesOutput,
   Error,
   GetTokenBalancesOutput,
-  GetTokenBalancesOutput,
-  [
-    FunctionKey.GET_TOKEN_BALANCES,
-    {
-      accountAddress: string;
-    },
-    ...string[],
-  ]
+  GetTokenBalancesOutput
 >;
 
 const useGetTokenBalances = (
-  { accountAddress, tokens }: Omit<GetTokenBalancesInput, 'multicall' | 'provider'>,
-  options?: Options,
+  {
+    accountAddress,
+    tokens,
+  }: Omit<GetTokenBalancesInput, "multicall" | "provider">,
+  options?: Options
 ) => {
   const multicall = useMulticall();
-  const { provider } = useAuth();
+  const provider = useProvider();
 
   // Sort addresses alphabetically to prevent unnecessary re-renders
-  const sortedTokenAddresses = [...tokens].map(token => token.address).sort();
+  const sortedTokenAddresses = [...tokens].map((token) => token.address).sort();
 
-  const result = useQuery(
-    [
+  const result = useQuery({
+    queryKey: [
       FunctionKey.GET_TOKEN_BALANCES,
       {
         accountAddress,
       },
       ...sortedTokenAddresses,
     ],
-    () => getTokenBalances({ multicall, accountAddress, tokens, provider }),
-    options,
-  );
+    queryFn: () =>
+      getTokenBalances({ multicall, accountAddress, tokens, provider }),
+    ...options,
+  });
   return result;
 };
 

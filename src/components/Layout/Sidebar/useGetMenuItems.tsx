@@ -8,14 +8,14 @@ import {
   ZORO_GITBOOK_URL,
   ZORO_LIQUIDATOR_URL
 } from 'constants/urls'
-import { useAuth } from 'context/AuthContext'
 import { useMemo } from 'react'
 import { getContractAddress, isFeatureEnabled } from 'utilities'
+import { useAccount } from 'wagmi'
 
 const MAIN_POOL_COMPTROLLER_ADDRESS = getContractAddress('comptroller')
 
 const useGetMenuItems = () => {
-  const { accountAddress } = useAuth()
+  const { address: accountAddress } = useAccount()
 
   return useMemo(() => {
     const menuItems: MenuItem[] = [

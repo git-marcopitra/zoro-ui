@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import DisabledActionNotice from "./DisabledActionNotice";
 import { useGetPool } from "clients/api";
-import { ApproveToken, ConnectWallet, Spinner } from "components";
-import { useAuth } from "context/AuthContext";
 import useAssetInfo from "hooks/useAssetInfo";
 import React from "react";
 import { Asset, Pool, TokenAction, VToken } from "types";
 import { areTokensEqual, isTokenActionEnabled } from "utilities";
+import { useAccount } from "wagmi";
 
 export interface AssetAccessorProps {
   vToken: VToken;
@@ -29,7 +29,7 @@ const AssetAccessor: React.FC<AssetAccessorProps> = ({
   setIsValidAllowance,
   isValidAllowance,
 }) => {
-  const { accountAddress } = useAuth();
+  const { address: accountAddress } = useAccount();
 
   const { data: getPoolData } = useGetPool({
     poolComptrollerAddress,
@@ -59,26 +59,7 @@ const AssetAccessor: React.FC<AssetAccessorProps> = ({
   }
 
   return (
-    <ConnectWallet message={connectWalletMessage}>
-      {pool && asset ? (
-        type === "borrow" ? (
-          children({ asset, pool })
-        ) : (
-          <ApproveToken
-            token={vToken.underlyingToken}
-            spenderAddress={vToken.address}
-            title={approveTokenMessage}
-            assetInfo={assetInfo}
-            setIsValidAllowance={setIsValidAllowance}
-            isValidAllowance={isValidAllowance}
-          >
-            {children({ asset, pool })}
-          </ApproveToken>
-        )
-      ) : (
-        <Spinner />
-      )}
-    </ConnectWallet>
+    <ConnectButton />
   );
 };
 

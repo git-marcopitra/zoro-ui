@@ -1,4 +1,4 @@
-import { MutationObserverOptions, useMutation } from 'react-query';
+import { MutationObserverOptions, useMutation } from '@tanstack/react-query';
 import { VToken } from 'types';
 
 import { BorrowInput, BorrowOutput, borrow, queryClient } from 'clients/api';

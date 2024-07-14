@@ -7,7 +7,6 @@ import { getVTokenByAddress } from 'utilities';
 
 import addTokenToWallet, { canRegisterToken } from 'clients/web3/addTokenToWallet';
 import { Subdirectory, routes } from 'constants/routing';
-import { useAuth } from 'context/AuthContext';
 import useCopyToClipboard from 'hooks/useCopyToClipboard';
 
 import { TertiaryButton } from '../../../Button';
@@ -15,6 +14,7 @@ import { EllipseAddress } from '../../../EllipseAddress';
 import { Icon } from '../../../Icon';
 import PoolName from './PoolName';
 import { useStyles } from './styles';
+import { useAccount } from 'wagmi';
 
 export interface PathNode {
   dom: React.ReactNode;
@@ -24,7 +24,7 @@ export interface PathNode {
 const Breadcrumbs: React.FC = () => {
   const { t } = useTranslation();
   const { pathname } = useLocation();
-  const { accountAddress } = useAuth();
+  const { address: accountAddress } = useAccount();
   const styles = useStyles();
   const copyToClipboard = useCopyToClipboard(t('interactive.copy.walletAddress'));
 

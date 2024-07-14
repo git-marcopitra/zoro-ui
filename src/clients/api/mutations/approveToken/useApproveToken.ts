@@ -1,4 +1,4 @@
-import { MutationObserverOptions, useMutation } from 'react-query';
+import { MutationObserverOptions, useMutation } from '@tanstack/react-query';
 import { Token } from 'types';
 
 import { ApproveTokenInput, ApproveTokenOutput, approveToken, queryClient } from 'clients/api';

@@ -1,5 +1,4 @@
 import { Meta } from '@storybook/react';
-import noop from 'noop-ts';
 import React from 'react';
 
 import { withCenterStory } from 'stories/decorators';
@@ -13,7 +12,7 @@ export default {
 } as Meta<typeof PromptUi>;
 
 export const Prompt = () => (
-  <PromptUi message="Please connect your wallet to mint VAI" openAuthModal={noop} connected={false}>
+  <PromptUi message="Please connect your wallet to mint VAI" connected={false}>
     Protected content
   </PromptUi>
 );

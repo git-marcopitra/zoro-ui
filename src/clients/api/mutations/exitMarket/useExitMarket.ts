@@ -1,4 +1,4 @@
-import { MutationObserverOptions, useMutation } from 'react-query';
+import { MutationObserverOptions, useMutation } from '@tanstack/react-query';
 
 import { ExitMarketInput, ExitMarketOutput, exitMarket, queryClient } from 'clients/api';
 import FunctionKey from 'constants/functionKey';

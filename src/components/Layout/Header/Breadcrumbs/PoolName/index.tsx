@@ -3,14 +3,14 @@ import React from 'react';
 
 import { useGetPool } from 'clients/api';
 import PLACEHOLDER_KEY from 'constants/placeholderKey';
-import { useAuth } from 'context/AuthContext';
+import { useAccount } from 'wagmi';
 
 export interface PoolNameProps {
   poolComptrollerAddress: string;
 }
 
 const PoolName: React.FC<PoolNameProps> = ({ poolComptrollerAddress }) => {
-  const { accountAddress } = useAuth();
+  const { address: accountAddress } = useAccount();
   const { data: getPoolData } = useGetPool({
     accountAddress,
     poolComptrollerAddress,

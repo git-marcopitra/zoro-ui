@@ -1,4 +1,4 @@
-import { QueryObserverOptions, useQuery } from 'react-query';
+import { QueryObserverOptions, useQuery } from '@tanstack/react-query';
 import { Token } from 'types';
 
 import getAllowance, {

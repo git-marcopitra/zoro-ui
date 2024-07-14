@@ -9,7 +9,6 @@ import { toast } from "../Toast";
 import { TokenIcon } from "../TokenIcon";
 import useStyles from "./styles";
 import Typography from "@mui/material/Typography";
-import { useAuth } from "context/AuthContext";
 import { GeolocationContext } from "context/GeolocationContext";
 import { VError, formatVErrorToReadableString } from "errors";
 import { ContractReceipt } from "ethers";

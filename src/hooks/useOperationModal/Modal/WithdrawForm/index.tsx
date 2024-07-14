@@ -10,13 +10,13 @@ import {
   useRedeemUnderlying,
 } from "clients/api";
 import { AccountData, TokenTextField } from "components";
-import { useAuth } from "context/AuthContext";
 import { VError } from "errors";
 import useFormatTokensToReadableValue from "hooks/useFormatTokensToReadableValue";
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "translation";
 import { Asset, Pool } from "types";
 import { convertTokensToWei } from "utilities";
+import { useAccount } from "wagmi";
 
 export interface WithdrawFormUiProps {
   asset: Asset;
@@ -181,7 +181,7 @@ const WithdrawForm: React.FC<WithdrawFormProps> = ({
   pool,
   onCloseModal,
 }) => {
-  const { accountAddress } = useAuth();
+  const { adddress: accountAddress } = useAccount();
 
   const [formValues, setFormValues] = useState<FormValues>({
     amountTokens: "",

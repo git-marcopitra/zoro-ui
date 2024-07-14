@@ -1,12 +1,13 @@
-import App from 'App';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import '@rainbow-me/rainbowkit/styles.css';
+import initializeLibraries from "./initializeLibraries";
+import App from "App";
+import "assets/styles/index.scss";
 import * as buffer from "buffer";
-window.Buffer = buffer.Buffer;
-import 'assets/styles/index.scss';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import initializeLibraries from './initializeLibraries';
+window.Buffer = buffer.Buffer;
 
 initializeLibraries();
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById("root"));

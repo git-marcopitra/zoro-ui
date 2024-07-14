@@ -16,12 +16,12 @@ import {
 } from 'components'
 import { TOKENS } from 'constants/tokens'
 import { MarketTable, MarketTableProps } from 'containers/MarketTable'
-import { useAuth } from 'context/AuthContext'
 import { useHideXlDownCss, useShowXlDownCss } from 'hooks/responsive'
 import React, { InputHTMLAttributes, useMemo, useState } from 'react'
 import { useTranslation } from 'translation'
 import { Pool } from 'types'
 import { isFeatureEnabled } from 'utilities'
+import { useAccount } from 'wagmi'
 
 interface DashboardUiProps {
   searchValue: string
@@ -387,7 +387,7 @@ export const DashboardUi: React.FC<DashboardUiProps> = ({
 }
 
 const Dashboard: React.FC = () => {
-  const { accountAddress } = useAuth()
+  const { address: accountAddress } = useAccount()
 
   const [searchValue, setSearchValue] = useState('')
 

@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { QueryObserverOptions, useQuery } from 'react-query';
+import { QueryObserverOptions, useQuery } from '@tanstack/react-query';
 import { VToken } from 'types';
 
 import getVTokenApySimulations, {

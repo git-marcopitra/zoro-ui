@@ -22,7 +22,6 @@ import { routes } from 'constants/routing'
 import { TOKENS } from 'constants/tokens'
 import { BLOCKS_PER_DAY } from 'constants/zk'
 import { SECONDS_PER_DAY } from 'constants/zk'
-import { useAuth } from 'context/AuthContext'
 import { useHideXlDownCss, useShowXlDownCss } from 'hooks/responsive'
 import useOperationModal from 'hooks/useOperationModal'
 import React, { useMemo } from 'react'
@@ -38,6 +37,7 @@ import {
   getVTokenByAddress,
   isTokenActionEnabled
 } from 'utilities'
+import { useAccount } from 'wagmi'
 
 export interface MarketUiProps {
   isChartDataLoading: boolean
@@ -475,7 +475,7 @@ const Market: React.FC<MarketProps> = ({
     params: { vTokenAddress, poolComptrollerAddress }
   }
 }) => {
-  const { accountAddress } = useAuth()
+  const { address: accountAddress } = useAccount()
   const vToken = getVTokenByAddress(vTokenAddress)
 
   //console.log("vToken in Market", vToken);

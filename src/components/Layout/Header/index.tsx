@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 //import ClaimRewardButton from '../ClaimRewardButton';
-import ConnectButton from "../ConnectButton";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Toolbar } from "../Toolbar";
 import Breadcrumbs from "./Breadcrumbs";
 import { useStyles } from "./styles";

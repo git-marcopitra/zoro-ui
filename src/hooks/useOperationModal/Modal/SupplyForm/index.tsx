@@ -9,7 +9,6 @@ import BigNumber from 'bignumber.js';
 import { useSupply } from 'clients/api';
 import { AccountData, Delimiter, IsolatedAssetWarning, LabeledInlineContent, SelectTokenTextField, Toggle, TokenTextField, toast } from 'components';
 import { TOKENS } from 'constants/tokens';
-import { useAuth } from 'context/AuthContext';
 import { VError, formatVErrorToReadableString } from 'errors';
 import useCollateral from 'hooks/useCollateral';
 import useFormatTokensToReadableValue from 'hooks/useFormatTokensToReadableValue';
@@ -20,6 +19,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'translation';
 import { Asset, Pool, Swap, SwapError, TokenBalance } from 'types';
 import { areTokensEqual, convertTokensToWei, convertWeiToTokens, isFeatureEnabled } from 'utilities';
+import { useAccount } from 'wagmi';
 
 
 export const PRESET_PERCENTAGES = [25, 50, 75, 100]
@@ -58,7 +58,7 @@ export const SupplyFormUi: React.FC<SupplyFormUiProps> = ({
   const { t, Trans } = useTranslation()
   const sharedStyles = useSharedStyles()
   const { CollateralModal, toggleCollateral } = useCollateral()
-  const { accountAddress } = useAuth();
+  const { address: accountAddress } = useAccount();
   const {
     data: getTokenAllowanceData
   } = useGetAllowance(

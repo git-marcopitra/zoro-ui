@@ -1,8 +1,11 @@
-import { QueryObserverOptions, useQuery } from 'react-query';
-
-import { GetBalanceOfInput, GetBalanceOfOutput, getBalanceOf } from 'clients/api';
-import FunctionKey from 'constants/functionKey';
-import { useAuth } from 'context/AuthContext';
+import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
+import {
+  GetBalanceOfInput,
+  GetBalanceOfOutput,
+  getBalanceOf,
+} from "clients/api";
+import FunctionKey from "constants/functionKey";
+import { useProvider } from "hooks/useProvider";
 
 type Options = QueryObserverOptions<
   GetBalanceOfOutput,
@@ -14,27 +17,27 @@ type Options = QueryObserverOptions<
     {
       accountAddress: string;
       tokenAddress: string;
-    },
+    }
   ]
 >;
 
 const useGetBalanceOf = (
-  { accountAddress, token }: Omit<GetBalanceOfInput, 'signer' | 'provider'>,
-  options?: Options,
+  { accountAddress, token }: Omit<GetBalanceOfInput, "signer" | "provider">,
+  options?: Options
 ) => {
-  const { provider } = useAuth();
+  const provider = useProvider();
 
-  return useQuery(
-    [
+  return useQuery({
+    queryKey: [
       FunctionKey.GET_BALANCE_OF,
       {
         accountAddress,
         tokenAddress: token.address,
       },
     ],
-    () => getBalanceOf({ provider, accountAddress, token }),
-    options,
-  );
+    queryFn: () => getBalanceOf({ provider, accountAddress, token }),
+    ...options,
+  });
 };
 
 export default useGetBalanceOf;

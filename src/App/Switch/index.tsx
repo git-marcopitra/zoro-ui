@@ -1,6 +1,5 @@
 import "assets/styles/App.scss";
 import { routes } from "constants/routing";
-import { useAuth } from "context/AuthContext";
 import Account from "pages/Account";
 import Dashboard from "pages/Dashboard";
 import Market from "pages/Market";
@@ -15,9 +14,10 @@ import {
   useLocation,
 } from "react-router-dom";
 import { isFeatureEnabled } from "utilities";
+import { useAccount } from "wagmi";
 
 const Switch = () => {
-  const { accountAddress } = useAuth();
+  const { address } = useAccount();
   const location = useLocation();
   const history = useHistory();
 
@@ -26,13 +26,13 @@ const Switch = () => {
   // dashboard, the redirection will not happen
   useEffect(() => {
     if (
-      !!accountAddress &&
+      !!address &&
       location.pathname === routes.dashboard.path &&
       history.length <= 2
     ) {
       history.replace(routes.account.path);
     }
-  }, [location, accountAddress, history]);
+  }, [location, address, history]);
 
   return (
     <RRSwitch>

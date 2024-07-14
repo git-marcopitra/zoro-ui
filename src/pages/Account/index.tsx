@@ -8,13 +8,13 @@ import { areTokensEqual } from 'utilities';
 //import { useGetPools, useGetVaults } from 'clients/api';
 import { useGetPools } from 'clients/api';
 import { TOKENS } from 'constants/tokens';
-import { useAuth } from 'context/AuthContext';
 
 import AccountPlaceholder from './AccountPlaceholder';
 import PoolsBreakdown from './PoolsBreakdown';
 import Summary from './Summary';
 import VaultsBreakdown from './VaultsBreakdown';
 import { useStyles } from './styles';
+import { useAccount } from 'wagmi';
 
 export interface AccountUiProps {
   pools: Pool[];
@@ -95,7 +95,7 @@ export const AccountUi: React.FC<AccountUiProps> = ({ isFetching, vaults, pools 
 };
 
 const Account: React.FC = () => {
-  const { accountAddress } = useAuth();
+  const { address: accountAddress } = useAccount();
   const { data: getPoolsData, isLoading: isGetPoolsLoading } = useGetPools({
     accountAddress,
   });

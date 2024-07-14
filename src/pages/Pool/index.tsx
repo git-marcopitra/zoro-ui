@@ -11,10 +11,10 @@ import { formatCentsToReadableValue } from 'utilities';
 import { useGetPools } from 'clients/api';
 import PLACEHOLDER_KEY from 'constants/placeholderKey';
 import { routes } from 'constants/routing';
-import { useAuth } from 'context/AuthContext';
 
 import Table from './Table';
 import { useStyles } from './styles';
+import { useAccount } from 'wagmi';
 
 export interface PoolUiProps {
   pool?: Pool;
@@ -92,8 +92,8 @@ const PoolPage: React.FC<PoolPageProps> = ({
     params: { poolComptrollerAddress },
   },
 }) => {
-  const { accountAddress } = useAuth();
-
+  const { address: accountAddress } = useAccount();
+  
   const { data: getPoolData, isLoading: isGetPoolLoading } = useGetPools({
     accountAddress
   });

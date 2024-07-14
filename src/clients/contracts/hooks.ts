@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { Token, VToken } from 'types';
 
-import { useAuth } from 'context/AuthContext';
 
 import {
   getComptrollerContract,
@@ -19,34 +18,35 @@ import {
   //getXvsVaultProxyContract,
   //getXvsVestingProxyContract,
 } from './getters';
+import { useSigner } from 'hooks/useSigner';
 
 export const useTokenContract = (token: Token) => {
-  const { signer } = useAuth();
-  return useMemo(() => getTokenContract(token, signer || undefined), [signer, token]);
+  const signer = useSigner();
+  return useMemo(() => getTokenContract(token, signer), [signer, token]);
 };
 
 export const useVTokenContract = (vToken: VToken) => {
-  const { signer } = useAuth();
-  return useMemo(() => getVTokenContract(vToken, signer || undefined), [signer, vToken]);
+  const signer  = useSigner();
+  return useMemo(() => getVTokenContract(vToken, signer ), [signer, vToken]);
 };
 
 export const useVaiControllerContract = () => {
-  const { signer } = useAuth();
-  return useMemo(() => getVaiControllerContract(signer || undefined), [signer]);
+  const signer  = useSigner();
+  return useMemo(() => getVaiControllerContract(signer), [signer]);
 };
 
 export const useVaiVaultContract = () => {
-  const { signer } = useAuth();
-  return useMemo(() => getVaiVaultContract(signer || undefined), [signer]);
+  const signer  = useSigner();
+  return useMemo(() => getVaiVaultContract(signer), [signer]);
 };
 
 export const useComptrollerContract = (address: string) => {
-  const { signer } = useAuth();
+  const signer = useSigner();
   return useMemo(() => getComptrollerContract(address, signer || undefined), [signer]);
 };
 
 export const useVenusLensContract = () => {
-  const { signer } = useAuth();
+  const signer = useSigner();
   return useMemo(() => getVenusLensContract(signer || undefined), [signer]);
 };
 

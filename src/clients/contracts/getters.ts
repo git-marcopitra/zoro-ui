@@ -1,4 +1,4 @@
-import { Contract, ContractInterface, Signer } from 'zksync-web3';
+import { Contract, ContractInterface } from 'zksync-web3';
 import { Token, VToken } from 'types';
 import { areTokensEqual, getContractAddress } from 'utilities';
 //import { areTokensEqual, getContractAddress, getSwapRouterContractAddress } from 'utilities';
@@ -41,6 +41,9 @@ import {
 } from 'types/contracts';
 
 import { TokenContract, VTokenContract } from './types';
+import { Signer } from 'ethers';
+
+
 
 export const getContract = ({
   abi,

@@ -11,13 +11,15 @@ import {
 } from 'clients/api';
 import { getComptrollerContract, getVTokenContract } from 'clients/contracts';
 import { TOKENS } from 'constants/tokens';
-import { useAuth } from 'context/AuthContext';
 //import { DisableLunaUstWarningContext } from 'context/DisableLunaUstWarning';
 
 import { CollateralConfirmModal } from './CollateralConfirmModal';
+import { useAccount } from 'wagmi';
+import { useSigner } from 'hooks/useSigner';
 
 const useCollateral = () => {
-  const { accountAddress, signer } = useAuth();
+  const { address: accountAddress} = useAccount();
+  const signer = useSigner();
   const [selectedAsset, setSelectedAsset] = useState<Asset | undefined>(undefined);
   //const { hasLunaOrUstCollateralEnabled } = useContext(DisableLunaUstWarningContext);
 

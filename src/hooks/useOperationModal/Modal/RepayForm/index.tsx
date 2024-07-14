@@ -12,7 +12,6 @@ import { useRepay } from "clients/api";
 import { useGetAllowance } from "clients/api";
 import { AccountData, Delimiter, LabeledInlineContent, NoticeWarning, QuaternaryButton, SelectTokenTextField, //SwapDetails,
 TokenTextField } from "components";
-import { useAuth } from "context/AuthContext";
 import { VError } from "errors";
 import useFormatTokensToReadableValue from "hooks/useFormatTokensToReadableValue";
 //import useGetSwapInfo from 'hooks/useGetSwapInfo';
@@ -21,6 +20,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "translation";
 import { Asset, Pool, TokenBalance } from "types";
 import { areTokensEqual, convertTokensToWei, convertWeiToTokens, formatToReadablePercentage, isFeatureEnabled } from "utilities";
+import { useAccount } from "wagmi";
 
 
 export const PRESET_PERCENTAGES = [25, 50, 75, 100];
@@ -62,7 +62,7 @@ export const RepayFormUi: React.FC<RepayFormUiProps> = ({
 
   const sharedStyles = useSharedStyles();
   const styles = useStyles();
-  const { accountAddress } = useAuth();
+  const { address: accountAddress } = useAccount();
   const isUsingSwap = useMemo(
     () =>
       isFeatureEnabled("integratedSwap") &&
