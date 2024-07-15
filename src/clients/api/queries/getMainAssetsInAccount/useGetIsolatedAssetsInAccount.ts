@@ -24,10 +24,10 @@ const useGetIsolatedAssetsInAccount = (
 ) => {
   const comptrollerContract = useComptrollerContract(mainPoolComptrollerAddress);
 
-  return useQuery(
-    [FunctionKey.GET_ISOLATED_ASSETS_IN_ACCOUNT, { accountAddress }],
-    () => getMainAssetsInAccount({ comptrollerContract, accountAddress }),
-    options,
+  return useQuery({
+    queryKey: [FunctionKey.GET_ISOLATED_ASSETS_IN_ACCOUNT, { accountAddress }],
+    queryFn:() => getMainAssetsInAccount({ comptrollerContract, accountAddress }),
+   ...options,}
   );
 };
 

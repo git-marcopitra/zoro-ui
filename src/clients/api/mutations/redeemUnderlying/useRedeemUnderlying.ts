@@ -1,53 +1,59 @@
-import { MutationObserverOptions, useMutation } from '@tanstack/react-query';
-import { VToken } from 'types';
-
-import { queryClient } from 'clients/api';
+import { MutationObserverOptions, useMutation } from "@tanstack/react-query";
+import { queryClient } from "clients/api";
 import redeemUnderlying, {
   RedeemUnderlyingInput,
   RedeemUnderlyingOutput,
-} from 'clients/api/mutations/redeemUnderlying';
-import { useVTokenContract } from 'clients/contracts/hooks';
-import FunctionKey from 'constants/functionKey';
+} from "clients/api/mutations/redeemUnderlying";
+import { useVTokenContract } from "clients/contracts/hooks";
+import FunctionKey from "constants/functionKey";
+import { VToken } from "types";
 
 const useRedeemUnderlying = (
   { vToken }: { vToken: VToken },
   options?: MutationObserverOptions<
     RedeemUnderlyingOutput,
     Error,
-    Omit<RedeemUnderlyingInput, 'vTokenContract' | 'accountAddress'>
-  >,
+    Omit<RedeemUnderlyingInput, "vTokenContract" | "accountAddress">
+  >
 ) => {
   const vTokenContract = useVTokenContract(vToken);
 
-  return useMutation(
-    FunctionKey.REDEEM_UNDERLYING,
-    params =>
+  return useMutation({
+    mutationKey: [FunctionKey.REDEEM_UNDERLYING],
+    mutationFn: (params) =>
       redeemUnderlying({
         vTokenContract,
         ...params,
       }),
-    {
-      ...options,
-      onSuccess: async (...onSuccessParams) => {
-        const accountAddress = await vTokenContract.signer.getAddress();
 
-        queryClient.invalidateQueries(FunctionKey.GET_V_TOKEN_BALANCES_ALL);
-        queryClient.invalidateQueries([
+    ...options,
+    onSuccess: async (...onSuccessParams) => {
+      const accountAddress = await vTokenContract.signer.getAddress();
+
+      queryClient.invalidateQueries({
+        queryKey: [FunctionKey.GET_V_TOKEN_BALANCES_ALL],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [
           FunctionKey.GET_V_TOKEN_BALANCE,
           {
             accountAddress,
             vTokenAddress: vToken.address,
           },
-        ]);
-        queryClient.invalidateQueries(FunctionKey.GET_MAIN_MARKETS);
-        queryClient.invalidateQueries(FunctionKey.GET_ISOLATED_POOLS);
+        ],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [FunctionKey.GET_MAIN_MARKETS],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [FunctionKey.GET_ISOLATED_POOLS],
+      });
 
-        if (options?.onSuccess) {
-          options.onSuccess(...onSuccessParams);
-        }
-      },
+      if (options?.onSuccess) {
+        options.onSuccess(...onSuccessParams);
+      }
     },
-  );
+  });
 };
 
 export default useRedeemUnderlying;

@@ -1,12 +1,11 @@
-import { QueryObserverOptions, useQuery } from '@tanstack/react-query';
-import { Token } from 'types';
-
+import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
 import getAllowance, {
   GetAllowanceInput,
   GetAllowanceOutput,
-} from 'clients/api/queries/getAllowance';
-import { useTokenContract } from 'clients/contracts/hooks';
-import FunctionKey from 'constants/functionKey';
+} from "clients/api/queries/getAllowance";
+import { useTokenContract } from "clients/contracts/hooks";
+import FunctionKey from "constants/functionKey";
+import { Token } from "types";
 
 export type UseGetAllowanceQueryKey = [
   FunctionKey.GET_TOKEN_ALLOWANCE,
@@ -15,7 +14,7 @@ export type UseGetAllowanceQueryKey = [
     spenderAddress: string;
     accountAddress: string;
     isValidAllowance?: boolean;
-  },
+  }
 ];
 
 type Options = QueryObserverOptions<
@@ -32,13 +31,13 @@ const useGetAllowance = (
     spenderAddress,
     accountAddress,
     isValidAllowance,
-  }: Omit<GetAllowanceInput, 'tokenContract'> & { token: Token },
-  options?: Options,
+  }: Omit<GetAllowanceInput, "tokenContract"> & { token: Token },
+  options?: Options
 ) => {
   const tokenContract = useTokenContract(token);
 
-  return useQuery(
-    [
+  return useQuery({
+    queryKey: [
       FunctionKey.GET_TOKEN_ALLOWANCE,
       {
         tokenAddress: token.address,
@@ -47,14 +46,14 @@ const useGetAllowance = (
         isValidAllowance,
       },
     ],
-    () =>
+    queryFn: () =>
       getAllowance({
         tokenContract,
         spenderAddress,
         accountAddress,
       }),
-    options,
-  );
+    ...options,
+  });
 };
 
 export default useGetAllowance;

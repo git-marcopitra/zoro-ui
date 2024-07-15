@@ -1,16 +1,26 @@
-import { MutationObserverOptions, useMutation } from '@tanstack/react-query';
-
-import { ExitMarketInput, ExitMarketOutput, exitMarket, queryClient } from 'clients/api';
-import FunctionKey from 'constants/functionKey';
+import { MutationObserverOptions, useMutation } from "@tanstack/react-query";
+import {
+  ExitMarketInput,
+  ExitMarketOutput,
+  exitMarket,
+  queryClient,
+} from "clients/api";
+import FunctionKey from "constants/functionKey";
 
 const useExitMarket = (
-  options?: MutationObserverOptions<ExitMarketOutput, Error, ExitMarketInput>,
+  options?: MutationObserverOptions<ExitMarketOutput, Error, ExitMarketInput>
 ) =>
-  useMutation(FunctionKey.EXIT_MARKET, exitMarket, {
+  useMutation({
+    mutationKey: [FunctionKey.EXIT_MARKET],
+    mutationFn: exitMarket,
     ...options,
     onSuccess: (...onSuccessParams) => {
-      queryClient.invalidateQueries(FunctionKey.GET_MAIN_ASSETS_IN_ACCOUNT);
-      queryClient.invalidateQueries(FunctionKey.GET_ISOLATED_POOLS);
+      queryClient.invalidateQueries({
+        queryKey: [FunctionKey.GET_MAIN_ASSETS_IN_ACCOUNT],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [FunctionKey.GET_ISOLATED_POOLS],
+      });
 
       if (options?.onSuccess) {
         options.onSuccess(...onSuccessParams);

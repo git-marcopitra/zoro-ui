@@ -1,10 +1,9 @@
-import { QueryObserverOptions, useQuery } from '@tanstack/react-query';
-
+import { QueryObserverOptions, useQuery } from "@tanstack/react-query";
 import getMarketHistory, {
   GetMarketHistoryInput,
   GetMarketHistoryOutput,
-} from 'clients/api/queries/getMarketHistory';
-import FunctionKey from 'constants/functionKey';
+} from "clients/api/queries/getMarketHistory";
+import FunctionKey from "constants/functionKey";
 
 type Options = QueryObserverOptions<
   GetMarketHistoryOutput,
@@ -15,10 +14,13 @@ type Options = QueryObserverOptions<
 >;
 
 const useGetMarketHistory = (input: GetMarketHistoryInput, options?: Options) =>
-  useQuery(
-    [FunctionKey.GET_MARKET_HISTORY, { vTokenAddress: input.vToken.address }],
-    () => getMarketHistory(input),
-    options,
-  );
+  useQuery({
+    queryKey: [
+      FunctionKey.GET_MARKET_HISTORY,
+      { vTokenAddress: input.vToken.address },
+    ],
+    queryFn: () => getMarketHistory(input),
+    ...options,
+  });
 
 export default useGetMarketHistory;

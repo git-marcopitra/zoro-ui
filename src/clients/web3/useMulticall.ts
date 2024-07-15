@@ -6,8 +6,6 @@ import { getContractAddress } from "utilities";
 const useMulticall = () => {
   const provider = useProvider();
   const MULTICALL_ADDRESS = getContractAddress("multicall");
-
-  if (!provider) return;
   
   return useMemo(
     () =>

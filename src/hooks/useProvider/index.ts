@@ -1,8 +1,8 @@
-import { Web3Provider } from "@ethersproject/providers";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 import { providers } from "ethers";
 import { Config, useAccount, useConnectorClient } from "wagmi";
 
-let cachedProvider: Web3Provider;
+let cachedProvider: Web3Provider | JsonRpcProvider;
 
 export const useProvider = () => {
   const { chain, chainId } = useAccount();
@@ -10,7 +10,7 @@ export const useProvider = () => {
 
   const transport = data?.transport;
 
-  if (!chain || !chainId || !transport) return;
+  if (!chain || !chainId || !transport) return new JsonRpcProvider("https://eth.llamarpc.com");
 
   if (!cachedProvider) {
     const network = {
