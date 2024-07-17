@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import logo_mobile from "assets/img/Logo-01.svg";
 import logo_desktop from "assets/img/Logo-02.svg";
+import BlockState from "components/BlockState";
 import React, { useState } from "react";
 import { useTranslation } from "translation";
 
@@ -188,6 +189,7 @@ export const SidebarUi: React.FC = () => {
 
           {/*<ClaimRewardButton css={styles.claimRewardButton} />*/}
         </Menu>
+
       </div>
     </>
   );

@@ -1,12 +1,10 @@
 import Switch from "./Switch";
 import {
-  ConnectButton,
   getDefaultConfig,
   RainbowKitProvider,
 } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "assets/styles/App.scss";
-import { queryClient } from "clients/api";
 import { Layout } from "components";
 import { SuccessfulTransactionModalProvider } from "context/SuccessfulTransactionModalContext";
 import React from "react";
